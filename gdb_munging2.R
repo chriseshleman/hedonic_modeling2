@@ -47,8 +47,8 @@ getwd() #
 
 ### Switching to this. https://gis.stackexchange.com/questions/184013/read-a-table-from-an-esri-file-geodatabase-gdb-using-r/184028
 gdb_contents 
+getwd() 
 parcel = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Parcel_Areis")
-str(parcel) 
 head(parcel, 10) 
 table(parcel$TOWN) 
 write.csv(parcel, "./hedonic_modeling/ce_tables/parcel_areis.csv")
@@ -62,3 +62,10 @@ condop = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Cond
 write.csv(condop, "./hedonic_modeling/ce_tables/condo_poly.csv") 
 head(condop) 
 
+
+### 
+# From https://github.com/USEPA/intro_gis_with_r/blob/master/lessons/02_read_in_gis_data.md
+ogrListLayers("./hedonic_modeling/HR&A_Advisors.gdb")
+examp_fgdb = readOGR(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Parcel_Areis")
+summary(examp_fgdb)
+plot(examp_fgdb) 
