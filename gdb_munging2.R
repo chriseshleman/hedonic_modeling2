@@ -49,6 +49,8 @@ getwd() #
 gdb_contents 
 parcel = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Parcel_Areis")
 str(parcel) 
+head(parcel, 10) 
+table(parcel$TOWN) 
 write.csv(parcel, "./hedonic_modeling/ce_tables/parcel_areis.csv")
 ppoly = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Parcel_Poly")
 write.csv(ppoly, "./hedonic_modeling/ce_tables/parcel_poly.csv")
@@ -59,3 +61,4 @@ write.csv(condo, "./hedonic_modeling/ce_tables/condo_areis.csv")
 condop = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Condo_Poly") 
 write.csv(condop, "./hedonic_modeling/ce_tables/condo_poly.csv") 
 head(condop) 
+
