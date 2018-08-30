@@ -35,9 +35,6 @@ gdb_neat_deets = data.frame('Name' = gdb_contents[['name']],
                             'Geomtype' = unlist(gdb_contents[['geomtype']]), 
                             'features' = gdb_contents[['features']], 
                             'fields' = gdb_contents[['fields']]) 
-head(gdb_neat_deets) 
-str(gdb_contents) 
-head(gdb_neat_deets@Parcel_Areis) 
 
 # so the non-spatial tables have geometry == NA, lets get their names 
 properties_nonspatial = 
@@ -46,35 +43,9 @@ properties_nonspatial =
 # names attrib is useful here 
 names(properties_nonspatial) = 
   gdb_neat_deets[is.na(gdb_neat_deets$Geomtype), 'Name'] 
-getwd() 
+getwd() # 
 
-
-
-# pull all the non-spatial layers out to csv using GDAL: 
-lapply(seq_along(properties_nonspatial), function(x) { 
-  system2 ('C:/OSGeo4W64/bin/ogr2ogr.exe', #("/Users/chriseshleman/Dropbox/Work and research/Airport noise pollution/data and models/hedonic", 
-           args = c(# output format 
-             '-f', 'csv', 
-             # overwrite 
-             '-overwrite', 
-             # destination file 
-             file.path(getwd(), 
-                       './hedonic_modeling/HR&A_tables', 
-                       paste0(names(properties_nonspatial[x]), '.csv')), 
-             # src file 
-             file.path(getwd(), './hedonic_modeling/HR&A_Advisors.gdb'), properties_nonspatial[x])) 
-}) 
-
-# are they there? 
-properties_csvs = list.files(file.path(getwd(), './hedonic_modeling/HR&A_tables'), 
-                             pattern = '\\.csv$', 
-                             full.names = TRUE) 
-
-
-### Script doesn't know what I'm trying to do via  "system2('C:/OSGeo4W64/bin/ogr2ogr.exe'," 
-### So there are no csvs in the folder. 
-
-# Trying this. https://gis.stackexchange.com/questions/184013/read-a-table-from-an-esri-file-geodatabase-gdb-using-r/184028
+### Switching to this. https://gis.stackexchange.com/questions/184013/read-a-table-from-an-esri-file-geodatabase-gdb-using-r/184028
 gdb_contents 
 parcel = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Parcel_Areis")
 str(parcel) 
@@ -87,3 +58,4 @@ condo = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Condo
 write.csv(condo, "./hedonic_modeling/ce_tables/condo_areis.csv")
 condop = sf::st_read(dsn = "./hedonic_modeling/HR&A_Advisors.gdb", layer = "Condo_Poly") 
 write.csv(condop, "./hedonic_modeling/ce_tables/condo_poly.csv") 
+head(condop) 
